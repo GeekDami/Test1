@@ -1,0 +1,8 @@
+bin/
+log/
+jssecacerts
+test-output/
+.project
+.settings/
+.classpath
+.target/
