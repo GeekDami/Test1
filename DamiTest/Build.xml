@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AntTest" default="run" basedir="." >
+<!-- 默认target是run,运行ant命令直接执行run -->
+	<taskdef resource="testngtasks" classpath="${basedir}/lib/testng-6.8.jar"/>
+
+    <target name="clean">
+      <delete dir="${basedir}/bin"/>
+    </target>
+    <target name="compile" depends="clean">
+    <!-- 编译java文件依赖clean -->
+       <mkdir dir="${basedir}/bin"/>
+       <javac srcdir="${basedir}/src" destdir="${basedir}/bin" classpathref="classfile"/>
+    </target>
+    
+    <path id="classfile">
+        <fileset dir="${basedir}/lib" includes="*.jar"/>
+        <fileset dir="${basedir}/lib" includes="*.zip"/>
+        <pathelement location="${basedir}/bin"/>
+    </path>
+    
+    <target name="run" depends="compile">
+        <!-- 运行class文件,依赖compile -->
+        <testng outputdir="${basedir}/test-output" classpathref="classfile">
+            <xmlfileset dir="${basedir}">
+            	<include name="testsuite.xml"/>
+        	</xmlfileset>
+        </testng>
+      <!--<java classname="Test">            
+      <classpath>               
+      <pathelement path="build/classes"/>            
+      </classpath>        
+      </java>-->
+    </target>
+</project>
